@@ -12,27 +12,19 @@ class HierarchicalDataStore{
         this.nodeName = nodeName;
     }
 
-    public void setData(String data){
-        this.data = data;
+    public String getData(String nodeName){
+        return this.map.get(nodeName);
     }
 
-    public String getData(){
-        return this.data;
+    public void setData(String nodeName, String data){
+        this.map.put(nodeName, data);
     }
 
-    // public void setNodeName(String nodeName){
-    //     this.nodeName = nodeName;
-    // }
-
-    public String getNodeName(){
-        return this.nodeName;
+    public Set<String> getChildren(String nodeName){
+        return this.nodes.get(nodeName);
     }
 
-    public void setChildren(HierarchicalDataStore child){
-        this.children.add(child)
-    }
-
-    public HierarchicalDataStore getChildren(){
-        return this.children;
+    public void setChildren(String nodeName, String child){
+        (this.nodes.get(nodeName)).add(child);
     }
 }
