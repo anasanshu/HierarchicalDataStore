@@ -1,30 +1,51 @@
-class HierarchicalDataStore{
-    // private ArrayList<HierarchicalDataStore> children;
-    // private String data;
-    // private String nodeName;
+import java.util.*;
 
-    private ArrayList<Set<String>> nodes;
-    private Map<String, String> map;
+class HierarchicalDataStore{
+    private ArrayList<HierarchicalDataStore> children;
+    private String data;
+    private String nodeName;
 
     public HierarchicalDataStore(String nodeName){
-        // this.children.add(child);
-        // this.data = data;
+        this.data = "";
         this.nodeName = nodeName;
+        this.children = new ArrayList<HierarchicalDataStore>();
     }
 
-    public String getData(String nodeName){
-        return this.map.get(nodeName);
+    public String getData(){
+        return this.data;
     }
 
-    public void setData(String nodeName, String data){
-        this.map.put(nodeName, data);
+    public void setData(String data){
+        this.data = data;
     }
 
-    public Set<String> getChildren(String nodeName){
-        return this.nodes.get(nodeName);
+    public ArrayList<HierarchicalDataStore> getChildren(){
+        return this.children;
     }
 
-    public void setChildren(String nodeName, String child){
-        (this.nodes.get(nodeName)).add(child);
+    public void setChildren(String child){
+        HierarchicalDataStore childNode = new HierarchicalDataStore(child);
+        this.children.add(childNode);
+    }
+
+    public String getNodeName(){
+        return this.nodeName;
+    }
+
+    public boolean containsChild(String childNodeName){
+        for(HierarchicalDataStore child: this.getChildren()){
+            System.out.println("loop = "+child.getNodeName());
+            if(childNodeName.equals(child.getNodeName())) return true;
+        }
+
+        return false;
+    }
+
+    public HierarchicalDataStore getChild(String childNodeName){
+        for(HierarchicalDataStore child: this.children){
+            if(childNodeName.equals(child.nodeName)) return child;
+        }
+
+        return null;
     }
 }
