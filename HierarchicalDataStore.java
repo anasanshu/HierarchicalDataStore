@@ -34,7 +34,6 @@ class HierarchicalDataStore{
 
     public boolean containsChild(String childNodeName){
         for(HierarchicalDataStore child: this.getChildren()){
-            System.out.println("loop = "+child.getNodeName());
             if(childNodeName.equals(child.getNodeName())) return true;
         }
 
