@@ -55,6 +55,7 @@ class DataRepository implements IDataRepository{
         String[] nodePath = this.explodePath(path);
         int i = 1;
         HierarchicalDataStore head = this.fetchHead(path);
+        HierarchicalDataStore nodeToDelete = null;
         if(head == null) return false;
 
         if(nodePath.length == 1){
@@ -68,9 +69,12 @@ class DataRepository implements IDataRepository{
 
         for(HierarchicalDataStore child: head.getChildren()){
             if(child.getNodeName().equals(nodePath[i])){
-                head.getChildren().remove(child);
+                nodeToDelete = child;
+                break;        
             }
         }
+
+        head.getChildren().remove(nodeToDelete);
 
         return true;
     }
@@ -122,8 +126,21 @@ class DataRepository implements IDataRepository{
         return null;
     }
 
-    public ArrayList<HierarchicalDataStore> getStore(){
-        return this.store;
+    public void printStore(){
+        System.out.println("\n\n----****---- Printing Data for all the nodes ----****----\n");
+        for(HierarchicalDataStore node: this.getStore()){
+            this.dfs(node);
+        }
+        System.out.println("\n----****---- Print End ----****----");
+    }
+
+    private void dfs(HierarchicalDataStore head){
+        System.out.println(head.getNodeName()+" node has data - "+head.getData());
+        if((head.getChildren()).size()==0) return;
+        ArrayList<HierarchicalDataStore> children = head.getChildren();
+        for(HierarchicalDataStore child: children){
+            dfs(child);
+        }
     }
 
     private String[] explodePath(String path){
@@ -134,5 +151,9 @@ class DataRepository implements IDataRepository{
         }
 
         return list.toArray(new String[list.size()]);
+    }
+
+    private ArrayList<HierarchicalDataStore> getStore(){
+        return this.store;
     }
 }
